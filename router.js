@@ -1,5 +1,8 @@
-import home from './components/home.js'
+import Home from './pages/Home.vue'
 
-export const router = [
-  { path: '/', component: home }
-]
+export default () => {
+  return {
+    // route: Component
+    home: Home,
+  }
+}
