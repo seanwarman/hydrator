@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon dist/server.bundle.js"
+    "dev": "webpack && nodemon dist/server.bundle.js",
+    "build": "webpack"
   },
   "keywords": [],
   "author": "",
