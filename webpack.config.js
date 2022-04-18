@@ -2,9 +2,7 @@ const path = require('path')
 const { VueLoaderPlugin } = require('vue-loader')
 
 const common = {
-  optimization: {
-    minimize: false,
-  },
+  mode: 'development',
   module: {
     rules: [
       {
