@@ -36,20 +36,14 @@ to webpack.
 # TODO
 
 The **client.bundle.js** file currently includes the whole app, it'd be nice if
-we could split it into the relevant code for the route by doing something like:
+we could split it into the relevant code for the route. I've tried splitting
+the bundles per route but we can't use exports in the client side code which
+makes the implementation overly complicated.
 
-```
-// webpack.config.js
-// ...
-output:{
-  filename: '[name].client.bundle.js',
-}
-// ...
-```
+You can use code-splitting for this in webpack. Something to look into later I
+think.
 
-Then injecting the right name in **server.js**:
-
-```
-<script src="/dist/${path}.client.bundle.js"></script>
-```
-
+1. Install Pinia and get it working across the server and client (keep in mind
+   how they'll link together, do we need websockets?).
+2. Install a db, probably inside a container, are subscriptions possible? I
+   know you can't with MYSQL, but maybe Mongo or some other db can.
