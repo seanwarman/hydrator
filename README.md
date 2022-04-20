@@ -10,3 +10,46 @@ but also bundled for the client as well.
 My plan is to add Pina to this app then have the state synced between the
 client and server using websockets. This way we could even sync the server-side
 state with a database to have a single source of truth for the entire stack.
+
+## Development
+
+The app works by running two webpack configs, one for the client and the other
+for the server. So start by running webpack:
+
+```
+$ npx webpack watch
+```
+
+This will build your bundle files into dist. A **server.bundle.js** and a
+**client.bundle.js** 
+
+Then to run the server do:
+
+```
+$ npm run dev
+```
+
+This actually runs by directly calling **dist/server.bundle.js**, which allows
+us to develop using .vue files and whatever other nice tools we want to hook up
+to webpack.
+
+# TODO
+
+The **client.bundle.js** file currently includes the whole app, it'd be nice if
+we could split it into the relevant code for the route by doing something like:
+
+```
+// webpack.config.js
+// ...
+output:{
+  filename: '[name].client.bundle.js',
+}
+// ...
+```
+
+Then injecting the right name in **server.js**:
+
+```
+<script src="/dist/${path}.client.bundle.js"></script>
+```
+
