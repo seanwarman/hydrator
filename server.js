@@ -1,21 +1,19 @@
 import express from 'express'
 import { createSSRApp } from 'vue'
 import { renderToString } from 'vue/server-renderer'
+import devalue from '@nuxt/devalue'
+import { createPinia } from 'pinia'
 import Home from './pages/Home.vue'
 
-const port = 3000
+const pinia = createPinia()
 const server = express()
+const port = 3000
 
-server.get('/dist/:file', (req, res) => {
-  const { params } = req
-  const { file } = params
-  res.sendFile(__dirname + '/' + file)
-})
-
-server.get('/', (req, res) => {
-  const app = createSSRApp(Home)
-  renderToString(app).then(html => {
-    res.send(`
+const getHandler = component => {
+  return (req, res) => {
+    renderToString(createSSRApp(Home).use(pinia)).then(html => {
+      devalue(pinia.state.value)
+      res.send(`
 <!DOCTYPE html>
 <html>
   <head><title>Hydrate</title></head>
@@ -24,9 +22,27 @@ server.get('/', (req, res) => {
   </body>
   <script src="/dist/client.bundle.js"></script>
 </html>
-    `)
-  })
+      `)
+    })
+  }
+}
+
+
+
+
+
+
+
+server.get('/', getHandler(Home))
+
+server.get('/dist/:file', (req, res) => {
+  const { params } = req
+  const { file } = params
+  res.sendFile(__dirname + '/' + file)
 })
+
+
+
 
 
 
