@@ -3,15 +3,15 @@ import { createSSRApp } from 'vue'
 import { renderToString } from 'vue/server-renderer'
 import devalue from '@nuxt/devalue'
 import { createPinia } from 'pinia'
-import Home from './pages/Home.vue'
+import { router } from './router.js'
 
 const pinia = createPinia()
 const server = express()
 const port = 3000
 
-const getHandler = component => {
+const getHandler = route => {
   return (req, res) => {
-    renderToString(createSSRApp(Home).use(pinia)).then(html => {
+    renderToString(createSSRApp(route.component).use(pinia)).then(html => {
       devalue(pinia.state.value)
       res.send(`
 <!DOCTYPE html>
@@ -20,7 +20,10 @@ const getHandler = component => {
   <body>
     <div id="app">${html}</div>
   </body>
-  <script src="/dist/client.bundle.js"></script>
+  <script src="/dist/client.web.bundle.js"></script>
+  <script>
+    window.__HYDRATOR__('${route.path}')
+  </script>
 </html>
       `)
     })
@@ -32,8 +35,10 @@ const getHandler = component => {
 
 
 
+router.forEach(route => {
+  server.get(route.path, getHandler(route))
+})
 
-server.get('/', getHandler(Home))
 
 server.get('/dist/:file', (req, res) => {
   const { params } = req

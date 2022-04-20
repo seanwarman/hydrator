@@ -18,16 +18,20 @@ const common = {
 
 module.exports = [{
   target: 'node',
-  entry: './server.js',
+  entry: {
+    server: './server.js',
+  },
   output: {
-    filename: 'server.bundle.js',
+    filename: '[name].node.bundle.js',
   },
   ...common,
 }, {
   target: 'web',
-  entry: './client.js',
+  entry: {
+    client: './client.js',
+  },
   output: {
-    filename: 'client.bundle.js',
+    filename: '[name].web.bundle.js',
   },
   ...common,
 }]

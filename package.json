@@ -2,9 +2,8 @@
   "name": "vue-ssr-ssg-pina",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
-    "dev": "webpack && nodemon dist/server.bundle.js",
+    "dev": "webpack && nodemon dist/server.node.bundle.js",
     "build": "webpack"
   },
   "keywords": [],
