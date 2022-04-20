@@ -43,7 +43,9 @@ makes the implementation overly complicated.
 You can use code-splitting for this in webpack. Something to look into later I
 think.
 
-1. Install Pinia and get it working across the server and client (keep in mind
-   how they'll link together, do we need websockets?).
-2. Install a db, probably inside a container, are subscriptions possible? I
-   know you can't with MYSQL, but maybe Mongo or some other db can.
+1. Install Pinia and get it working across the server and client.
+2. Investigate some websocket libraries, is there one that's made for this kind
+   of thing?
+3. Install a db, probably inside a container, are subscriptions possible? I
+   know you can't with MYSQL, but maybe Mongo or some other db can. Possibly
+   just use waterline so you can plug in any db (if it's still a thing).
