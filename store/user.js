@@ -4,7 +4,7 @@ export const useUser = defineStore('user', {
   state: () => {
     return {
       counter: 0,
-      name: 'Eduardo',
+      name: 'Shuxt',
       isAdmin: true,
     }
   },

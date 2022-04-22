@@ -35,17 +35,18 @@ to webpack.
 
 # TODO
 
-The **client.bundle.js** file currently includes the whole app, it'd be nice if
-we could split it into the relevant code for the route. I've tried splitting
-the bundles per route but we can't use exports in the client side code which
-makes the implementation overly complicated.
-
-You can use code-splitting for this in webpack. Something to look into later I
-think.
-
-1. Install Pinia and get it working across the server and client.
+1. ~~Install Pinia and get it working across the server and client.~~
 2. Investigate some websocket libraries, is there one that's made for this kind
    of thing?
-3. Install a db, probably inside a container, are subscriptions possible? I
+   - There's an interesting socket lib called netflux, which intgerates sockets
+     with flux to create a peer to peer network. It's dep but good for ideas:
+     [netflux](https://github.com/coast-team/netflux)
+3. ~~Get webpack to send different client initialisers depending on the route.~~
+   - I managed this by using dynamic imports, webpack will code split every time
+     it sees one.
+   - It's also allowed me to use a single router.js file to define the app's
+     routes. They don't yet accept args tho, could be something to think about,
+     maybe possible using a global value (like nuxt does with $properties)
+4. Install a db, probably inside a container, are subscriptions possible? I
    know you can't with MYSQL, but maybe Mongo or some other db can. Possibly
    just use waterline so you can plug in any db (if it's still a thing).

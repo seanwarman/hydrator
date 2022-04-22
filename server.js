@@ -1,9 +1,9 @@
 import express from 'express'
-import { createSSRApp } from 'vue'
 import { renderToString } from 'vue/server-renderer'
 import devalue from '@nuxt/devalue'
 import { createPinia } from 'pinia'
-import { router } from './router.js'
+import { router, createAppFromPath } from './router.js'
+
 
 const pinia = createPinia()
 const server = express()
@@ -11,9 +11,11 @@ const port = 3000
 
 const getHandler = route => {
   return (req, res) => {
-    renderToString(createSSRApp(route.component).use(pinia)).then(html => {
-      devalue(pinia.state.value)
-      res.send(`
+    createAppFromPath(route.path).then(app => {
+      const pinia = createPinia()
+      renderToString(app.use(pinia)).then(html => {
+        devalue(pinia.state.value)
+        res.send(`
 <!DOCTYPE html>
 <html>
   <head><title>Hydrate</title></head>
@@ -21,11 +23,13 @@ const getHandler = route => {
     <div id="app">${html}</div>
   </body>
   <script src="/dist/client.web.bundle.js"></script>
+  <script src="/dist/pages_${route.name}_vue.web.bundle.js"></script>
   <script>
     window.__HYDRATOR__('${route.path}')
   </script>
 </html>
       `)
+      })
     })
   }
 }
@@ -43,6 +47,9 @@ router.forEach(route => {
 server.get('/dist/:file', (req, res) => {
   const { params } = req
   const { file } = params
+
+  // We're running node from the dist node build file, 
+  // so __dirname resolves to dist/
   res.sendFile(__dirname + '/' + file)
 })
 
