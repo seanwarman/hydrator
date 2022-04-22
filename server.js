@@ -24,9 +24,7 @@ const getHandler = route => {
   </body>
   <script src="/dist/client.web.bundle.js"></script>
   <script src="/dist/pages_${route.name}_vue.web.bundle.js"></script>
-  <script>
-    window.__HYDRATOR__('${route.path}')
-  </script>
+  <script>window.__HYDRATOR__('${route.path}')</script>
 </html>
       `)
       })
