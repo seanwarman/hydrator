@@ -5,11 +5,7 @@ see how useable an app is if the server and client where sharing not only
 template files but also a data source.
 
 You use a single set of template (.vue) files and they're both server rendered
-but also bundled for the client as well.
-
-My plan is to add Pina to this app then have the state synced between the
-client and server using websockets. This way we could even sync the server-side
-state with a database to have a single source of truth for the entire stack.
+but also bundled for the client as well, and the same for the state.
 
 ## Development
 
@@ -20,8 +16,7 @@ for the server. So start by running webpack:
 $ npm run watch
 ```
 
-This will build your bundle files into dist. A **server.bundle.js** and a
-**client.bundle.js** 
+This will build your bundle files into dist.
 
 Then to run the server do:
 
@@ -29,7 +24,7 @@ Then to run the server do:
 $ npm run dev
 ```
 
-This actually runs by directly calling **dist/server.bundle.js**, which allows
+This actually runs by directly calling **dist/server.node.bundle.js**, which allows
 us to develop using .vue files and whatever other nice tools we want to hook up
 to webpack.
 
