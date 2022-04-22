@@ -17,7 +17,7 @@ The app works by running two webpack configs, one for the client and the other
 for the server. So start by running webpack:
 
 ```
-$ npx webpack watch
+$ npm run watch
 ```
 
 This will build your bundle files into dist. A **server.bundle.js** and a
@@ -32,6 +32,14 @@ $ npm run dev
 This actually runs by directly calling **dist/server.bundle.js**, which allows
 us to develop using .vue files and whatever other nice tools we want to hook up
 to webpack.
+
+Then to allow auto-reloading do:
+
+```
+$ npm run browser
+```
+
+I know, I need to put this all into one command. Be patient with me.
 
 # TODO
 
